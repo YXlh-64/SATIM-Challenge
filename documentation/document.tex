@@ -1,0 +1,28 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{listings}
+
+\title{Developing a Solution for SATIM security policy issues}
+\author{} % Add author if needed
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+\subsection{System Architecture}
+Here is a high-level overview of the system architecture for the SATIM security policy issues:
+
+\begin{enumerate}
+    \item \textbf{Raw Docs:} This is the input stage where you have your raw documents (text files, PDFs, etc.) that need to be processed.
+    \item \textbf{Preprocessing:} This stage involves cleaning and preparing the raw documents for analysis. It may include removing unnecessary formatting, extracting text, and normalizing data. We will use regular expressions and text processing libraries.
+    \item \textbf{Data Storage:} The preprocessed data is stored in a structured format, such as a database or a file system, for easy retrieval and analysis.
+    \item \textbf{Analysis:} This stage involves applying various algorithms to analyze the preprocessed data. This could include natural language processing (NLP) techniques, machine learning models, or rule-based systems to identify security policy issues.
+    \item \textbf{Reporting:} After analysis, the system generates reports or alerts based on the findings. This could be in the form of a dashboard, email notifications, or logs.
+    \item \textbf{Feedback Loop:} The system should allow for feedback from users or administrators to improve the analysis and reporting processes. This could involve retraining models or adjusting rules based on new data or insights.
+    \item \textbf{User Interface:} A user-friendly interface for administrators to interact with the system, view reports, and manage configurations.
+    \item \textbf{Security Measures:} Implement security measures to protect sensitive data, such as encryption, access controls, and audit logs.
+\end{enumerate}
+\end{document}
