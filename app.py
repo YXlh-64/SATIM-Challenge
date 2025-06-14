@@ -57,87 +57,60 @@ def index():
 
 @app.route('/analyze', methods=['POST'])
 def analyze():
-    logger.debug("Received analyze request")
-    logger.debug(f"Request files: {request.files}")
-    logger.debug(f"Request form: {request.form}")
-    
     try:
-        # Get language preference (default to English)
         language = request.form.get('language', 'en')
-        logger.debug(f"Language preference: {language}")
         
+        # Check if this is a use case analysis
+        if 'use_case' in request.form:
+            use_case = request.form.get('use_case')
+            is_cis = request.form.get('is_cis') == 'true'
+            
+            # Analyze the use case
+            result = analyzer.analyze_use_case(use_case, language)
+            if result:
+                return jsonify(result)
+            else:
+                return jsonify({'error': 'Failed to analyze use case'}), 500
+        
+        # Handle file upload
         if 'file' in request.files:
-            logger.debug("File upload detected")
-            # Handle file upload
             file = request.files['file']
-            logger.debug(f"File details - filename: {file.filename}, content_type: {file.content_type}")
-            
-            # Validate file
-            if file.filename == '':
-                logger.warning("No file selected")
-                return jsonify({'error': 'No file selected'}), 400
-                
-            if not allowed_file(file.filename):
-                logger.warning(f"Invalid file type: {file.filename}")
-                return jsonify({'error': 'Only PDF files are allowed'}), 400
-            
-            try:
-                # Save file temporarily
+            if file and file.filename.endswith('.pdf'):
+                # Save the file temporarily
                 filename = secure_filename(file.filename)
                 filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-                logger.debug(f"Attempting to save file to: {filepath}")
-                
-                # Ensure the upload directory exists
-                os.makedirs(os.path.dirname(filepath), exist_ok=True)
-                
-                # Save the file
                 file.save(filepath)
-                logger.info(f"File saved successfully to: {filepath}")
-                
-                # Verify file was saved
-                if not os.path.exists(filepath):
-                    raise Exception(f"File was not saved successfully to {filepath}")
                 
                 # Analyze the policy
-                logger.debug("Starting policy analysis")
-                result = analyzer.analyze_new_policy(filepath, language=language)
+                result = analyzer.analyze_new_policy(filepath, language)
                 
-                if result is None:
-                    logger.error(f"Analysis failed for file: {filepath}")
-                    return jsonify({'error': 'Analysis failed'}), 500
-                
-                logger.info("Analysis completed successfully")
-                return jsonify(result)
-                
-            finally:
                 # Clean up
-                try:
-                    if os.path.exists(filepath):
-                        os.remove(filepath)
-                        logger.info(f"Temporary file removed: {filepath}")
-                except Exception as e:
-                    logger.error(f"Error removing temporary file {filepath}: {str(e)}")
-            
+                os.remove(filepath)
+                
+                if result:
+                    return jsonify(result)
+                else:
+                    return jsonify({'error': 'Failed to analyze policy'}), 500
+            else:
+                return jsonify({'error': 'Invalid file type'}), 400
+        
+        # Handle text input
         elif 'policy_text' in request.form:
-            logger.debug("Text input detected")
-            # Handle text input
-            policy_text = request.form['policy_text']
-            if not policy_text.strip():
-                return jsonify({'error': 'Policy text cannot be empty'}), 400
-                
-            result = analyzer.analyze_new_policy_from_text(policy_text, language=language)
-            if result is None:
-                return jsonify({'error': 'Analysis failed'}), 500
-                
-            return jsonify(result)
-            
-        else:
-            logger.warning("No file or text provided in request")
-            return jsonify({'error': 'No file or text provided'}), 400
-            
+            policy_text = request.form.get('policy_text')
+            if policy_text:
+                result = analyzer.analyze_new_policy_from_text(policy_text, language)
+                if result:
+                    return jsonify(result)
+                else:
+                    return jsonify({'error': 'Failed to analyze policy text'}), 500
+            else:
+                return jsonify({'error': 'No policy text provided'}), 400
+        
+        return jsonify({'error': 'No valid input provided'}), 400
+        
     except Exception as e:
-        logger.error(f"Error in analyze endpoint: {str(e)}", exc_info=True)
-        return jsonify({'error': 'An error occurred during analysis'}), 500
+        print(f"Error in analyze endpoint: {str(e)}")
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     # Clean up old files before starting

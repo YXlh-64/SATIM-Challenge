@@ -49,6 +49,9 @@
                 <button class="tab-btn px-4 py-2 text-gray-600" data-tab="text" data-i18n="textTab">
                     Enter Text
                 </button>
+                <button class="tab-btn px-4 py-2 text-gray-600" data-tab="usecase" data-i18n="usecaseTab">
+                    Test Use Case
+                </button>
             </div>
 
             <!-- Upload Form -->
@@ -82,6 +85,74 @@
                     </button>
                 </form>
             </div>
+
+            <!-- Use Case Test Form -->
+            <div id="usecase-tab" class="tab-content hidden">
+                <form id="usecase-form" class="space-y-4">
+                    <!-- Toggle Switch -->
+                    <div class="flex items-center justify-between mb-4">
+                        <label class="text-gray-700 text-sm font-bold" data-i18n="useCISControls">
+                            Use CIS v8 Controls
+                        </label>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="cis-toggle" class="sr-only peer" checked>
+                            <div class="w-11 h-6 bg-gray-300 rounded-full peer peer-checked:bg-red-600">
+                                <div class="w-5 h-5 bg-white rounded-full shadow absolute left-0.5 top-0.5 transition-all duration-200 ease-in-out peer-checked:left-5"></div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <!-- CIS Controls Section -->
+                    <div id="cis-controls-section">
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="usecase-select" data-i18n="selectUsecase">
+                                Select CIS Control
+                            </label>
+                            <select id="usecase-select" name="usecase" 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                                <optgroup label="Basic Controls" data-i18n="basicControls">
+                                    <option value="cis_1_1" data-i18n="cis_1_1">1.1 - Inventory and Control of Enterprise Assets</option>
+                                    <option value="cis_1_2" data-i18n="cis_1_2">1.2 - Inventory and Control of Software Assets</option>
+                                    <option value="cis_1_3" data-i18n="cis_1_3">1.3 - Data Protection</option>
+                                    <option value="cis_1_4" data-i18n="cis_1_4">1.4 - Secure Configuration of Enterprise Assets and Software</option>
+                                    <option value="cis_1_5" data-i18n="cis_1_5">1.5 - Account Management</option>
+                                </optgroup>
+                                <optgroup label="Foundational Controls" data-i18n="foundationalControls">
+                                    <option value="cis_2_1" data-i18n="cis_2_1">2.1 - Email and Web Browser Protections</option>
+                                    <option value="cis_2_2" data-i18n="cis_2_2">2.2 - Malware Defenses</option>
+                                    <option value="cis_2_3" data-i18n="cis_2_3">2.3 - Data Recovery Capabilities</option>
+                                    <option value="cis_2_4" data-i18n="cis_2_4">2.4 - Secure Configuration of Network Infrastructure</option>
+                                    <option value="cis_2_5" data-i18n="cis_2_5">2.5 - Boundary Defense</option>
+                                </optgroup>
+                                <optgroup label="Organizational Controls" data-i18n="organizationalControls">
+                                    <option value="cis_3_1" data-i18n="cis_3_1">3.1 - Security Skills Assessment and Training</option>
+                                    <option value="cis_3_2" data-i18n="cis_3_2">3.2 - Application Software Security</option>
+                                    <option value="cis_3_3" data-i18n="cis_3_3">3.3 - Incident Response Management</option>
+                                    <option value="cis_3_4" data-i18n="cis_3_4">3.4 - Penetration Testing</option>
+                                    <option value="cis_3_5" data-i18n="cis_3_5">3.5 - Audit Log Management</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Custom Use Case Section -->
+                    <div id="custom-usecase-section" class="hidden">
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="custom-usecase-title" data-i18n="customUsecaseTitle">
+                                Use Case Title
+                            </label>
+                            <input type="text" id="custom-usecase-title" name="custom_usecase_title" 
+                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+                                data-i18n-placeholder="customUsecaseTitlePlaceholder"
+                                placeholder="Enter a title for your use case">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition duration-200" data-i18n="analyzeButton">
+                        Analyze Use Case
+                    </button>
+                </form>
+            </div>
         </div>
 
         <!-- Loading Indicator -->
@@ -95,7 +166,33 @@
         <!-- Results Section -->
         <div id="results" class="max-w-3xl mx-auto mt-8 bg-white rounded-lg shadow-md p-6 hidden">
             <h2 class="text-xl font-semibold mb-4" data-i18n="resultsTitle">Analysis Results</h2>
-            <div id="analysis-content" class="prose max-w-none"></div>
+            
+            <!-- KPI Cards -->
+            <div id="kpi-cards" class="mb-6">
+                <div class="bg-gray-50 p-4 rounded-lg max-w-xs mx-auto">
+                    <h3 class="text-lg font-medium text-gray-700 mb-2" data-i18n="complianceScore">Compliance Score</h3>
+                    <div id="compliance-score" class="text-3xl font-bold text-red-600">--%</div>
+                </div>
+            </div>
+
+            <!-- Detailed Analysis -->
+            <div class="space-y-6">
+                <div class="border-b pb-4">
+                    <h3 class="text-lg font-medium text-gray-700 mb-2" data-i18n="riskAssessment">Risk Assessment</h3>
+                    <div id="risk-assessment" class="prose max-w-none"></div>
+                </div>
+                
+                <div class="border-b pb-4">
+                    <h3 class="text-lg font-medium text-gray-700 mb-2" data-i18n="implementationStatus">Implementation Status</h3>
+                    <div id="implementation-status" class="prose max-w-none"></div>
+                </div>
+                
+                <div class="border-b pb-4">
+                    <h3 class="text-lg font-medium text-gray-700 mb-2" data-i18n="policyCoverage">Policy Coverage</h3>
+                    <div id="policy-coverage" class="prose max-w-none"></div>
+                </div>
+            </div>
+
             <div class="mt-4 text-sm text-gray-500">
                 <span data-i18n="analyzedAt">Analyzed at</span>: <span id="timestamp"></span>
             </div>
@@ -162,19 +259,22 @@
             const formData = new FormData(form);
             formData.append('language', currentLanguage);
             
-            // Validate file if it's a file upload
-            if (form.id === 'upload-form') {
-                const fileInput = document.getElementById('file');
-                if (!fileInput.files.length) {
-                    showError(translations[currentLanguage].errors.noFile);
-                    return;
-                }
-                const file = fileInput.files[0];
-                if (!file.name.toLowerCase().endsWith('.pdf')) {
-                    showError(translations[currentLanguage].errors.invalidType);
-                    return;
-                }
+            // Get the use case based on toggle state
+            const isCISMode = document.getElementById('cis-toggle').checked;
+            let useCase;
+            
+            if (isCISMode) {
+                // Get the selected CIS control
+                const select = document.getElementById('usecase-select');
+                useCase = select.options[select.selectedIndex].text;
+            } else {
+                // Get the custom use case title
+                useCase = document.getElementById('custom-usecase-title').value;
             }
+            
+            // Add the use case to form data
+            formData.append('use_case', useCase);
+            formData.append('is_cis', isCISMode);
             
             // Show loading
             document.getElementById('loading').classList.add('active');
@@ -190,7 +290,54 @@
                 if (response.ok) {
                     // Display results
                     document.getElementById('results').classList.remove('hidden');
-                    document.getElementById('analysis-content').innerHTML = data.analysis.replace(/\n/g, '<br>');
+                    
+                    // Parse and display KPIs
+                    const analysis = data.analysis;
+                    
+                    // Extract compliance score with more robust pattern matching
+                    let complianceScore = 'N/A';
+                    
+                    // Try to find the score in various formats
+                    const scorePatterns = [
+                        /Compliance Score:\s*(\d+)%/i,
+                        /Score de Conformité:\s*(\d+)%/i,
+                        /Compliance Score\s*(\d+)%/i,
+                        /Score de Conformité\s*(\d+)%/i,
+                        /(\d+)%\s*compliance/i,
+                        /(\d+)%\s*conformité/i
+                    ];
+                    
+                    for (const pattern of scorePatterns) {
+                        const match = analysis.match(pattern);
+                        if (match) {
+                            const score = parseInt(match[1]);
+                            if (!isNaN(score) && score >= 0 && score <= 100) {
+                                complianceScore = score + '%';
+                                break;
+                            }
+                        }
+                    }
+                    
+                    document.getElementById('compliance-score').textContent = complianceScore;
+                    
+                    // Split and display detailed sections
+                    const sections = analysis.split(/\d+\.\s+/);
+                    if (sections.length >= 4) {
+                        // Clean up section content by removing any score/risk level lines
+                        const cleanSection = (text) => {
+                            return text
+                                .replace(/Compliance Score:?\s*\d+(?:%| percent|%)/i, '')
+                                .replace(/Score de Conformité:?\s*\d+(?:%| pourcent|%)/i, '')
+                                .replace(/Risk Level:?\s*(Low|Medium|High|Faible|Moyen|Élevé)/i, '')
+                                .replace(/Niveau de Risque:?\s*(Low|Medium|High|Faible|Moyen|Élevé)/i, '')
+                                .trim();
+                        };
+
+                        document.getElementById('risk-assessment').innerHTML = cleanSection(sections[2]).replace(/\n/g, '<br>');
+                        document.getElementById('implementation-status').innerHTML = cleanSection(sections[3]).replace(/\n/g, '<br>');
+                        document.getElementById('policy-coverage').innerHTML = cleanSection(sections[4]).replace(/\n/g, '<br>');
+                    }
+                    
                     document.getElementById('timestamp').textContent = new Date(data.timestamp).toLocaleString();
                 } else {
                     showError(data.error || translations[currentLanguage].errors.analysisFailed);
@@ -206,6 +353,7 @@
 
         document.getElementById('upload-form').addEventListener('submit', handleSubmit);
         document.getElementById('text-form').addEventListener('submit', handleSubmit);
+        document.getElementById('usecase-form').addEventListener('submit', handleSubmit);
 
         // File upload UI
         const fileInput = document.getElementById('file');
@@ -274,6 +422,20 @@
                 errorDiv.classList.add('hidden');
             }, 5000);
         }
+
+        // Add this to your existing JavaScript
+        document.getElementById('cis-toggle').addEventListener('change', function() {
+            const cisSection = document.getElementById('cis-controls-section');
+            const customSection = document.getElementById('custom-usecase-section');
+            
+            if (this.checked) {
+                cisSection.classList.remove('hidden');
+                customSection.classList.add('hidden');
+            } else {
+                cisSection.classList.add('hidden');
+                customSection.classList.remove('hidden');
+            }
+        });
     </script>
 </body>
 </html> 
