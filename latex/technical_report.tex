@@ -8,6 +8,7 @@
 \usepackage{geometry}
 \usepackage{amsmath}
 \usepackage{booktabs}
+\usepackage{pdfpages} % Adding package for PDF inclusion
 
 \geometry{margin=2.5cm}
 
@@ -129,6 +130,73 @@ Key Python packages required:
     \item Vector database libraries
 \end{itemize}
 
+\section{Solution Structure}
+\includepdf[pages=-]{Solution Structure.pdf}
+
+\section{Use Case Analysis}
+\subsection{Overview}
+The system includes a dedicated use case analysis feature that allows users to evaluate specific scenarios against internal policies. This feature supports both CIS v8 controls and custom use cases, providing a comprehensive analysis of policy compliance and implementation status.
+
+\subsection{Key Features}
+\begin{itemize}
+    \item CIS v8 Control Integration
+    \begin{itemize}
+        \item Pre-defined set of CIS v8 controls
+        \item Organized into Basic, Foundational, and Organizational categories
+        \item Easy selection through dropdown interface
+    \end{itemize}
+    \item Custom Use Case Support
+    \begin{itemize}
+        \item Ability to define custom use cases
+        \item Flexible input format
+        \item Comprehensive analysis against internal policies
+    \end{itemize}
+    \item Analysis Components
+    \begin{itemize}
+        \item Compliance Score (0-100\%)
+        \item Risk Assessment
+        \item Implementation Status
+        \item Policy Coverage Analysis
+    \end{itemize}
+\end{itemize}
+
+\subsection{Technical Implementation}
+The use case analyzer leverages the same core components as the policy analyzer but with specialized prompts and analysis templates:
+\begin{itemize}
+    \item Vector database search for relevant policies
+    \item Structured prompt templates for consistent analysis
+    \item Multi-language support (English and French)
+    \item Real-time analysis and reporting
+\end{itemize}
+
+\subsection{Analysis Process}
+The use case analysis follows a systematic approach:
+\begin{enumerate}
+    \item Input Processing
+    \begin{itemize}
+        \item CIS control selection or custom use case input
+        \item Language preference detection
+    \end{itemize}
+    \item Policy Matching
+    \begin{itemize}
+        \item Vector similarity search for relevant policies
+        \item Context gathering from matching policies
+    \end{itemize}
+    \item Analysis Generation
+    \begin{itemize}
+        \item Compliance score calculation
+        \item Risk assessment
+        \item Implementation status evaluation
+        \item Policy coverage analysis
+    \end{itemize}
+    \item Results Presentation
+    \begin{itemize}
+        \item Structured output format
+        \item Visual representation of KPIs
+        \item Detailed analysis sections
+    \end{itemize}
+\end{enumerate}
+
 \section{Future Improvements}
 Potential areas for enhancement include:
 \begin{itemize}
@@ -136,7 +204,12 @@ Potential areas for enhancement include:
     \item Advanced reporting features
 \end{itemize}
 
-\section{Conclusion}
-    The SATIM Challenge project demonstrates a robust and scalable solution for automated policy compliance analysis. The system's architecture and implementation provide a solid foundation for future enhancements and broader adoption in organizational settings.
 
-\end{document} 
+\section{Conclusion}
+The SATIM Challenge project demonstrates a robust and scalable solution for automated policy compliance analysis. The system's architecture and implementation provide a solid foundation for future enhancements and broader adoption in organizational settings.
+
+% Adding appendix for solution structure
+\appendix
+
+
+\end{document}

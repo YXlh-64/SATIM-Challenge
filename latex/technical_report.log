@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025/Homebrew) (preloaded format=pdflatex 2025.3.15)  13 JUN 2025 23:03
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025/Homebrew) (preloaded format=pdflatex 2025.3.15)  14 JUN 2025 07:24
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -295,56 +295,91 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \@thisruleclass=\count307
 \@lastruleclass=\count308
 \@thisrulewidth=\dimen181
+) (/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/pdfpages/pdfpages.sty
+Package: pdfpages 2025/01/30 v0.6e Insert pages of external PDF documents (AM)
+ (/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2024/03/16 v1.1e Standard LaTeX ifthen package (DPC)
+) (/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2023/07/08 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count309
+\calc@Bcount=\count310
+\calc@Adimen=\dimen182
+\calc@Bdimen=\dimen183
+\calc@Askip=\skip55
+\calc@Bskip=\skip56
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count311
+\calc@Cskip=\skip57
+) (/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/eso-pic/eso-pic.sty
+Package: eso-pic 2023/05/03 v3.0c eso-pic (RN)
+\ESO@tempdima=\dimen184
+\ESO@tempdimb=\dimen185
+)
+\AM@pagewidth=\dimen186
+\AM@pageheight=\dimen187
+\AM@fboxrule=\dimen188
+ (/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/pdfpages/pppdftex.def
+File: pppdftex.def 2025/01/30 v0.6e Pdfpages driver for pdfTeX (AM)
+)
+\pdfpages@includegraphics@status=\count312
+\AM@pagebox=\box56
+\AM@global@opts=\toks27
+\AM@pagecnt=\count313
+\AM@toc@title=\toks28
+\AM@lof@heading=\toks29
+\c@AM@survey=\count314
+\AM@templatesizebox=\box57
 ) (/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2024-05-08 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count309
-\l__pdf_internal_box=\box56
+\l__color_backend_stack_int=\count315
+\l__pdf_internal_box=\box58
 ) (./technical_report.aux)
 \openout1 = `technical_report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 19.
+LaTeX Font Info:    ... okay on input line 19.
  (/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count310
-\scratchdimen=\dimen182
-\scratchbox=\box57
-\nofMPsegments=\count311
-\nofMParguments=\count312
-\everyMPshowfont=\toks27
-\MPscratchCnt=\count313
-\MPscratchDim=\dimen183
-\MPnumerator=\count314
-\makeMPintoPDFobject=\count315
-\everyMPtoPDFconversion=\toks28
+\scratchcounter=\count316
+\scratchdimen=\dimen189
+\scratchbox=\box59
+\nofMPsegments=\count317
+\nofMParguments=\count318
+\everyMPshowfont=\toks30
+\MPscratchCnt=\count319
+\MPscratchDim=\dimen190
+\MPnumerator=\count320
+\makeMPintoPDFobject=\count321
+\everyMPtoPDFconversion=\toks31
 ) (/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
  (/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-Package hyperref Info: Link coloring OFF on input line 18.
+Package hyperref Info: Link coloring OFF on input line 19.
  (./technical_report.out) (./technical_report.out)
 \@outlinefile=\write3
 \openout3 = `technical_report.out'.
 
-\c@lstlisting=\count316
+\c@lstlisting=\count322
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -380,37 +415,77 @@ Package hyperref Info: Link coloring OFF on input line 18.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-
+(/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/pdflscape/pdflscape.sty
+Package: pdflscape 2022-10-27 v0.13 Display of landscape pages in PDF
+ (/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/pdflscape/pdflscape-nometadata.sty
+Package: pdflscape-nometadata 2022-10-28 v0.13 Display of landscape pages in PDF (HO)
+ (/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/tex/latex/graphics/lscape.sty
+Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
+)
+Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
+))
 
 [1
 
 {/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/map/pdftex/updmap/pdftex.map}{/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{/opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
 
 [2]
+<Solution Structure.pdf, id=106, 965.6075pt x 1317.92375pt>
+File: Solution Structure.pdf Graphic file (type pdf)
+<use Solution Structure.pdf>
+Package pdftex.def Info: Solution Structure.pdf  used on input line 134.
+(pdftex.def)             Requested size: 965.60515pt x 1317.92055pt.
+<Solution Structure.pdf, id=108, page=1, 965.6075pt x 1317.92375pt>
+File: Solution Structure.pdf Graphic file (type pdf)
+<use Solution Structure.pdf, page 1>
+Package pdftex.def Info: Solution Structure.pdf , page1 used on input line 134.
+(pdftex.def)             Requested size: 965.60515pt x 1317.92055pt.
+File: Solution Structure.pdf Graphic file (type pdf)
+<use Solution Structure.pdf, page 1>
+Package pdftex.def Info: Solution Structure.pdf , page1 used on input line 134.
+(pdftex.def)             Requested size: 597.87483pt x 816.01836pt.
+
 
 [3]
+File: Solution Structure.pdf Graphic file (type pdf)
+<use Solution Structure.pdf, page 1>
+Package pdftex.def Info: Solution Structure.pdf , page1 used on input line 134.
+(pdftex.def)             Requested size: 597.87483pt x 816.01836pt.
+File: Solution Structure.pdf Graphic file (type pdf)
+<use Solution Structure.pdf, page 1>
+Package pdftex.def Info: Solution Structure.pdf , page1 used on input line 134.
+(pdftex.def)             Requested size: 597.87483pt x 816.01836pt.
 
-[4] (./technical_report.aux)
+
+File: Solution Structure.pdf Graphic file (type pdf)
+<use Solution Structure.pdf, page 1>
+Package pdftex.def Info: Solution Structure.pdf , page1 used on input line 134.
+(pdftex.def)             Requested size: 597.87483pt x 816.01836pt.
+[4
+
+ <./Solution Structure.pdf>]
+
+[5] (./technical_report.aux)
  ***********
 LaTeX2e <2024-11-01> patch level 2
 L3 programming layer <2025-01-18>
  ***********
 Package rerunfilecheck Info: File `technical_report.out' has not changed.
-(rerunfilecheck)             Checksum: 071269DCA90B2BC724377DD526BCA7CF;3145.
+(rerunfilecheck)             Checksum: CD6776FB80548B4A1540815F1D3FCF5E;3282.
  ) 
 Here is how much of TeX's memory you used:
- 11809 strings out of 473190
- 182229 string characters out of 5704335
- 595784 words of memory out of 5000000
- 34906 multiletter control sequences out of 15000+600000
+ 12706 strings out of 473190
+ 198561 string characters out of 5704335
+ 612690 words of memory out of 5000000
+ 35773 multiletter control sequences out of 15000+600000
  569830 words of font info for 59 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,6n,79p,574b,508s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,17n,79p,574b,581s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/public/cm-super/sfbx1000.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></opt/homebrew/Cellar/texlive/20250308_1/share/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb>
-Output written on technical_report.pdf (4 pages, 150064 bytes).
+Output written on technical_report.pdf (5 pages, 586925 bytes).
 PDF statistics:
- 157 PDF objects out of 1000 (max. 8388607)
- 132 compressed objects within 2 object streams
- 25 named destinations out of 1000 (max. 500000)
- 161 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 831 PDF objects out of 1000 (max. 8388607)
+ 471 compressed objects within 5 object streams
+ 27 named destinations out of 1000 (max. 500000)
+ 184 words of extra memory for PDF output out of 10000 (max. 10000000)
 
