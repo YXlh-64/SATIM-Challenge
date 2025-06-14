@@ -167,8 +167,8 @@
         <div id="results" class="max-w-3xl mx-auto mt-8 bg-white rounded-lg shadow-md p-6 hidden">
             <h2 class="text-xl font-semibold mb-4" data-i18n="resultsTitle">Analysis Results</h2>
             
-            <!-- KPI Cards -->
-            <div id="kpi-cards" class="mb-6">
+            <!-- KPI Cards - Only shown for use case analysis -->
+            <div id="kpi-cards" class="mb-6 hidden">
                 <div class="bg-gray-50 p-4 rounded-lg max-w-xs mx-auto">
                     <h3 class="text-lg font-medium text-gray-700 mb-2" data-i18n="complianceScore">Compliance Score</h3>
                     <div id="compliance-score" class="text-3xl font-bold text-red-600">--%</div>
@@ -177,7 +177,8 @@
 
             <!-- Detailed Analysis -->
             <div class="space-y-6">
-                <div class="border-b pb-4">
+                <!-- Risk Assessment - Only shown for use case analysis -->
+                <div id="risk-assessment-section" class="border-b pb-4 hidden">
                     <h3 class="text-lg font-medium text-gray-700 mb-2" data-i18n="riskAssessment">Risk Assessment</h3>
                     <div id="risk-assessment" class="prose max-w-none"></div>
                 </div>
@@ -259,28 +260,37 @@
             const formData = new FormData(form);
             formData.append('language', currentLanguage);
             
-            // Get the use case based on toggle state
-            const isCISMode = document.getElementById('cis-toggle').checked;
-            let useCase;
-            
-            if (isCISMode) {
-                // Get the selected CIS control
-                const select = document.getElementById('usecase-select');
-                useCase = select.options[select.selectedIndex].text;
-            } else {
-                // Get the custom use case title
-                useCase = document.getElementById('custom-usecase-title').value;
-            }
-            
-            // Add the use case to form data
-            formData.append('use_case', useCase);
-            formData.append('is_cis', isCISMode);
-            
             // Show loading
             document.getElementById('loading').classList.add('active');
             
             try {
-                const response = await fetch('/analyze', {
+                let endpoint = '/analyze';
+                let isUseCase = false;
+
+                // Determine which type of analysis is being performed
+                if (form.id === 'usecase-form') {
+                    endpoint = '/analyze-usecase';
+                    isUseCase = true;
+                    
+                    // Get the use case based on toggle state
+                    const isCISMode = document.getElementById('cis-toggle').checked;
+                    let useCase;
+                    
+                    if (isCISMode) {
+                        // Get the selected CIS control
+                        const select = document.getElementById('usecase-select');
+                        useCase = select.options[select.selectedIndex].text;
+                    } else {
+                        // Get the custom use case title
+                        useCase = document.getElementById('custom-usecase-title').value;
+                    }
+                    
+                    // Add the use case to form data
+                    formData.append('use_case', useCase);
+                    formData.append('is_cis', isCISMode);
+                }
+                
+                const response = await fetch(endpoint, {
                     method: 'POST',
                     body: formData
                 });
@@ -291,51 +301,66 @@
                     // Display results
                     document.getElementById('results').classList.remove('hidden');
                     
+                    // Show/hide use case specific sections
+                    document.getElementById('kpi-cards').classList.toggle('hidden', !isUseCase);
+                    document.getElementById('risk-assessment-section').classList.toggle('hidden', !isUseCase);
+                    
                     // Parse and display KPIs
                     const analysis = data.analysis;
                     
-                    // Extract compliance score with more robust pattern matching
-                    let complianceScore = 'N/A';
-                    
-                    // Try to find the score in various formats
-                    const scorePatterns = [
-                        /Compliance Score:\s*(\d+)%/i,
-                        /Score de Conformité:\s*(\d+)%/i,
-                        /Compliance Score\s*(\d+)%/i,
-                        /Score de Conformité\s*(\d+)%/i,
-                        /(\d+)%\s*compliance/i,
-                        /(\d+)%\s*conformité/i
-                    ];
-                    
-                    for (const pattern of scorePatterns) {
-                        const match = analysis.match(pattern);
-                        if (match) {
-                            const score = parseInt(match[1]);
-                            if (!isNaN(score) && score >= 0 && score <= 100) {
-                                complianceScore = score + '%';
-                                break;
+                    if (isUseCase) {
+                        // Handle use case analysis results
+                        // Extract compliance score with more robust pattern matching
+                        let complianceScore = 'N/A';
+                        
+                        // Try to find the score in various formats
+                        const scorePatterns = [
+                            /Compliance Score:\s*(\d+)%/i,
+                            /Score de Conformité:\s*(\d+)%/i,
+                            /Compliance Score\s*(\d+)%/i,
+                            /Score de Conformité\s*(\d+)%/i,
+                            /(\d+)%\s*compliance/i,
+                            /(\d+)%\s*conformité/i
+                        ];
+                        
+                        for (const pattern of scorePatterns) {
+                            const match = analysis.match(pattern);
+                            if (match) {
+                                const score = parseInt(match[1]);
+                                if (!isNaN(score) && score >= 0 && score <= 100) {
+                                    complianceScore = score + '%';
+                                    break;
+                                }
                             }
                         }
-                    }
-                    
-                    document.getElementById('compliance-score').textContent = complianceScore;
-                    
-                    // Split and display detailed sections
-                    const sections = analysis.split(/\d+\.\s+/);
-                    if (sections.length >= 4) {
-                        // Clean up section content by removing any score/risk level lines
-                        const cleanSection = (text) => {
-                            return text
-                                .replace(/Compliance Score:?\s*\d+(?:%| percent|%)/i, '')
-                                .replace(/Score de Conformité:?\s*\d+(?:%| pourcent|%)/i, '')
-                                .replace(/Risk Level:?\s*(Low|Medium|High|Faible|Moyen|Élevé)/i, '')
-                                .replace(/Niveau de Risque:?\s*(Low|Medium|High|Faible|Moyen|Élevé)/i, '')
-                                .trim();
-                        };
+                        
+                        document.getElementById('compliance-score').textContent = complianceScore;
+                        
+                        // Split and display detailed sections
+                        const sections = analysis.split(/\d+\.\s+/);
+                        if (sections.length >= 4) {
+                            // Clean up section content by removing any score/risk level lines
+                            const cleanSection = (text) => {
+                                return text
+                                    .replace(/Compliance Score:?\s*\d+(?:%| percent|%)/i, '')
+                                    .replace(/Score de Conformité:?\s*\d+(?:%| pourcent|%)/i, '')
+                                    .replace(/Risk Level:?\s*(Low|Medium|High|Faible|Moyen|Élevé)/i, '')
+                                    .replace(/Niveau de Risque:?\s*(Low|Medium|High|Faible|Moyen|Élevé)/i, '')
+                                    .trim();
+                            };
 
-                        document.getElementById('risk-assessment').innerHTML = cleanSection(sections[2]).replace(/\n/g, '<br>');
-                        document.getElementById('implementation-status').innerHTML = cleanSection(sections[3]).replace(/\n/g, '<br>');
-                        document.getElementById('policy-coverage').innerHTML = cleanSection(sections[4]).replace(/\n/g, '<br>');
+                            document.getElementById('risk-assessment').innerHTML = cleanSection(sections[2]).replace(/\n/g, '<br>');
+                            document.getElementById('implementation-status').innerHTML = cleanSection(sections[3]).replace(/\n/g, '<br>');
+                            document.getElementById('policy-coverage').innerHTML = cleanSection(sections[4]).replace(/\n/g, '<br>');
+                        }
+                    } else {
+                        // Handle policy analysis results
+                        // Split and display detailed sections
+                        const sections = analysis.split(/\d+\.\s+/);
+                        if (sections.length >= 3) {
+                            document.getElementById('implementation-status').innerHTML = sections[1].replace(/\n/g, '<br>');
+                            document.getElementById('policy-coverage').innerHTML = sections[2].replace(/\n/g, '<br>');
+                        }
                     }
                     
                     document.getElementById('timestamp').textContent = new Date(data.timestamp).toLocaleString();

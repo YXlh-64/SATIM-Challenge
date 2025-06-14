@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 from policy_analyzer import PolicyAnalyzer
+from use_case_analyzer import UseCaseAnalyzer
 import os
 from werkzeug.utils import secure_filename
 from utils import load_documents
@@ -28,12 +29,16 @@ upload_dir.mkdir(exist_ok=True)
 if not os.access(upload_dir, os.W_OK):
     logger.error(f"Upload directory {upload_dir} is not writable!")
 
-# Initialize PolicyAnalyzer
-analyzer = PolicyAnalyzer(os.getenv('OPENROUTER_API_KEY'))
-analyzer.initialize_databases(
+# Initialize analyzers
+policy_analyzer = PolicyAnalyzer(os.getenv('OPENROUTER_API_KEY'))
+use_case_analyzer = UseCaseAnalyzer(os.getenv('OPENROUTER_API_KEY'))
+
+# Initialize databases
+policy_analyzer.initialize_databases(
     internal_path="data/internal",
     global_path="data/global"
 )
+use_case_analyzer.set_internal_db(policy_analyzer.internal_db)
 
 def allowed_file(filename):
     """Check if the file has an allowed extension"""
@@ -60,18 +65,6 @@ def analyze():
     try:
         language = request.form.get('language', 'en')
         
-        # Check if this is a use case analysis
-        if 'use_case' in request.form:
-            use_case = request.form.get('use_case')
-            is_cis = request.form.get('is_cis') == 'true'
-            
-            # Analyze the use case
-            result = analyzer.analyze_use_case(use_case, language)
-            if result:
-                return jsonify(result)
-            else:
-                return jsonify({'error': 'Failed to analyze use case'}), 500
-        
         # Handle file upload
         if 'file' in request.files:
             file = request.files['file']
@@ -82,7 +75,7 @@ def analyze():
                 file.save(filepath)
                 
                 # Analyze the policy
-                result = analyzer.analyze_new_policy(filepath, language)
+                result = policy_analyzer.analyze_new_policy(filepath, language)
                 
                 # Clean up
                 os.remove(filepath)
@@ -98,7 +91,7 @@ def analyze():
         elif 'policy_text' in request.form:
             policy_text = request.form.get('policy_text')
             if policy_text:
-                result = analyzer.analyze_new_policy_from_text(policy_text, language)
+                result = policy_analyzer.analyze_new_policy_from_text(policy_text, language)
                 if result:
                     return jsonify(result)
                 else:
@@ -109,7 +102,28 @@ def analyze():
         return jsonify({'error': 'No valid input provided'}), 400
         
     except Exception as e:
-        print(f"Error in analyze endpoint: {str(e)}")
+        logger.error(f"Error in analyze endpoint: {str(e)}")
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/analyze-usecase', methods=['POST'])
+def analyze_usecase():
+    try:
+        language = request.form.get('language', 'en')
+        use_case = request.form.get('use_case')
+        is_cis = request.form.get('is_cis') == 'true'
+        
+        if not use_case:
+            return jsonify({'error': 'No use case provided'}), 400
+            
+        # Analyze the use case
+        result = use_case_analyzer.analyze_use_case(use_case, language)
+        if result:
+            return jsonify(result)
+        else:
+            return jsonify({'error': 'Failed to analyze use case'}), 500
+            
+    except Exception as e:
+        logger.error(f"Error in analyze-usecase endpoint: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
